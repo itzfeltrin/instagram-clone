@@ -5,7 +5,7 @@ import {styles} from "./styles";
 
 const Header: React.FC = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>Instagram</Text>
     </View>
   );
