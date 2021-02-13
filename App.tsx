@@ -1,21 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useCallback, useState} from "react";
+import {StatusBar} from "react-native";
+import {Navigator} from "./src/components/navigator";
 
-export default function App() {
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
+
+const App: React.FC = () => {
+  const [loaded, setLoaded] = useState(false);
+
+  const fetchFonts = useCallback(() => {
+    return Font.loadAsync({
+      light: require("./src/assets/font/Montserrat-Light.ttf"),
+      regular: require("./src/assets/font/Montserrat-Regular.ttf"),
+      medium: require("./src/assets/font/Montserrat-Medium.ttf"),
+      semiBold: require("./src/assets/font/Montserrat-SemiBold.ttf"),
+      bold: require("./src/assets/font/Montserrat-Bold.ttf"),
+    });
+  }, [Font]);
+
+  if (!loaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setLoaded(true)}
+        onError={() => console.log("something went wrong")}
+      />
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar barStyle="default" />
+      <Navigator />
+    </>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
