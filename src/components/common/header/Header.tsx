@@ -1,14 +1,20 @@
 import React from "react";
-import {Text, View} from "react-native";
+import {Text} from "react-native";
+import Animated from "react-native-reanimated";
 
 import {styles} from "./styles";
+interface HeaderProps {
+	headerStyle: Animated.AnimatedStyleProp<{}>;
+}
 
-const Header: React.FC = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Instagram</Text>
-    </View>
-  );
+const Header: React.FC<HeaderProps> = (props) => {
+	const {headerStyle} = props;
+
+	return (
+		<Animated.View style={[styles.container, headerStyle]}>
+			<Text style={styles.title}>Instagram</Text>
+		</Animated.View>
+	);
 };
 
 export default Header;
